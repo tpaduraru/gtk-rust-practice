@@ -9,21 +9,37 @@ fn main() {
         return;
     }
 
-    let window = Window::new(WindowType::Toplevel);
-    window.set_title("First GTK+ Program");
-    window.set_default_size(350, 70);
-    let button = Button::new_with_label("Click me!");
-    window.add(&button);
-    window.show_all();
+    let window1 = Window::new(WindowType::Toplevel);
+    window1.set_title("First GTK+ Program");
+    window1.set_default_size(350, 70);
+    let window2 = Window::new(WindowType::Toplevel);
+    window2.set_title("First GTK+ Program");
+    window2.set_default_size(350, 70);
+    
+    let button1 = Button::new_with_label("Click me!");
+    let button2 = Button::new_with_label("No! Click me!");
+    window1.add(&button1);
+    window2.add(&button2);
+    window1.show_all();
+    window2.show_all();
 
-    window.connect_delete_event(|_, _| {
+    window1.connect_delete_event(|_, _| {
+        gtk::main_quit();
+        Inhibit(false)
+    });
+    window2.connect_delete_event(|_, _| {
         gtk::main_quit();
         Inhibit(false)
     });
 
-    button.connect_clicked(|_| {
+    button1.connect_clicked(|_| {
         println!("Clicked!");
     });
+    
+    button2.connect_clicked(|_| {
+        println!("Ha, Clicked!");
+    });
+
 
     gtk::main();
 }
